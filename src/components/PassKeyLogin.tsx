@@ -1,10 +1,12 @@
+"use client";
+
 import { startAuthentication } from "@simplewebauthn/browser";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 import { useAuth } from "hooks/AuthProvider";
 import { useInternalAuth } from "context/InternalAuthContext";
 import React from "react";
 
-import styles from "./styles/passKeyLogin.module.css";
+import styles from "../styles/passKeyLogin.module.css";
 
 const PassKeyLogin: React.FC = () => {
   const router = useRouter();

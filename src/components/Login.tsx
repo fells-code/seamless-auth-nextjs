@@ -3,9 +3,9 @@ import { useAuth } from "hooks/AuthProvider";
 import PhoneInputWithCountryCode from "components/phoneInput";
 import { useInternalAuth } from "context/InternalAuthContext";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 
-import styles from "./styles/login.module.css";
+import styles from "../styles/login.module.css";
 import { isPasskeySupported, isValidEmail, isValidPhoneNumber } from "../utils";
 
 const Login: React.FC = () => {

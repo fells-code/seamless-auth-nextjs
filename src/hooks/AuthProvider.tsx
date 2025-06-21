@@ -7,8 +7,8 @@ import React, {
   useState,
 } from "react";
 
-import { fetchWithAuth } from "../fetchWithAuth";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { fetchWithAuth } from "../fetchWithAuth";
 
 interface User {
   id: string;
@@ -81,7 +81,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
   useEffect(() => {
     validateToken();
-    setLoading(false);
   }, []);
 
   const logout = async () => {

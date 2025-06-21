@@ -1,9 +1,9 @@
 import { useAuth } from "hooks/AuthProvider";
 import { useInternalAuth } from "context/InternalAuthContext";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 
-import styles from "./styles/mfaLogin.module.css";
+import styles from "../styles/mfaLogin.module.css";
 
 const MfaLogin: React.FC = () => {
   const { apiHost } = useAuth();

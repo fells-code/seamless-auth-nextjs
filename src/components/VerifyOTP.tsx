@@ -1,8 +1,8 @@
 import { useAuth } from "hooks/AuthProvider";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 
-import styles from "./styles/verifyOTP.module.css";
+import styles from "../styles/verifyOTP.module.css";
 
 const VerifyOTP: React.FC = () => {
   const router = useRouter();
