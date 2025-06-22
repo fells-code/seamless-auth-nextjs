@@ -10,12 +10,12 @@ import React, {
 import LoadingSpinner from "../components/LoadingSpinner";
 import { fetchWithAuth } from "../fetchWithAuth";
 
-interface User {
+export type User = {
   id: string;
   email: string;
   phone: string;
   roles?: string[];
-}
+};
 
 type AuthToken = {
   oneTimeToken: string;
