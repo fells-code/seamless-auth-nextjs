@@ -1,13 +1,11 @@
-import { useAuth } from "hooks/AuthProvider";
-import { useInternalAuth } from "context/InternalAuthContext";
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import styles from "../styles/mfaLogin.module.css";
 
 const MfaLogin: React.FC = () => {
-  const { apiHost } = useAuth();
-  const { validateToken } = useInternalAuth();
   const router = useRouter();
   const [OTP, setOTP] = useState("");
   const [error, setError] = useState("");
@@ -48,7 +46,7 @@ const MfaLogin: React.FC = () => {
         : "otp/verify-login-email-otp";
 
     try {
-      const response = await fetch(`${apiHost}${endpoint}`, {
+      const response = await fetch(`/api/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +60,6 @@ const MfaLogin: React.FC = () => {
         return;
       }
 
-      await validateToken();
       router.replace("/");
     } catch (err) {
       console.error("Error verifying OTP", err);
@@ -77,7 +74,7 @@ const MfaLogin: React.FC = () => {
         ? "otp/generate-login-phone-otp"
         : "otp/generate-login-email-otp";
 
-    const response = await fetch(`${apiHost}${endpoint}`, {
+    const response = await fetch(`/api/${endpoint}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

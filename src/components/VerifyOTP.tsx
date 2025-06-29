@@ -1,12 +1,12 @@
-import { useAuth } from "hooks/AuthProvider";
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import styles from "../styles/verifyOTP.module.css";
 
 const VerifyOTP: React.FC = () => {
   const router = useRouter();
-  const { apiHost } = useAuth();
 
   const [emailOtp, setEmailOtp] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
@@ -47,7 +47,7 @@ const VerifyOTP: React.FC = () => {
     setLoading(true);
     try {
       if (!phoneVerified) {
-        const response = await fetch(`${apiHost}otp/verify-phone-otp`, {
+        const response = await fetch(`/api/otp/verify-phone-otp`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const VerifyOTP: React.FC = () => {
     setLoading(true);
     try {
       if (!emailVerified) {
-        const response = await fetch(`${apiHost}otp/verify-email-otp`, {
+        const response = await fetch(`/api/otp/verify-email-otp`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const VerifyOTP: React.FC = () => {
 
   const onResendEmail = async () => {
     setError("");
-    const response = await fetch(`${apiHost}otp/generate-email-otp`, {
+    const response = await fetch(`/api/otp/generate-email-otp`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +128,7 @@ const VerifyOTP: React.FC = () => {
 
   const onResendPhone = async () => {
     setError("");
-    const response = await fetch(`${apiHost}otp/generate-phone-otp`, {
+    const response = await fetch(`/api/otp/generate-phone-otp`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

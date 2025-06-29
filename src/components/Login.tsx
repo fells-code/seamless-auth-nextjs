@@ -1,17 +1,20 @@
+"use client";
+
 import { startAuthentication } from "@simplewebauthn/browser";
-import { useAuth } from "hooks/AuthProvider";
 import PhoneInputWithCountryCode from "components/phoneInput";
-import { useInternalAuth } from "context/InternalAuthContext";
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import styles from "../styles/login.module.css";
 import { isPasskeySupported, isValidEmail, isValidPhoneNumber } from "../utils";
 
-const Login: React.FC = () => {
+interface LoginProps {
+  redirectPath?: string;
+  onSuccess?: () => void;
+}
+
+const Login: React.FC<LoginProps> = ({ redirectPath = "/", onSuccess }) => {
   const router = useRouter();
-  const { apiHost } = useAuth();
-  const { validateToken } = useInternalAuth();
   const [identifier, setIdentifier] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [mode, setMode] = useState<"login" | "register">("register");
@@ -52,7 +55,7 @@ const Login: React.FC = () => {
   const handlePasskeyLogin = async () => {
     try {
       const response = await fetch(
-        `${apiHost}webAuthn/generate-authentication-options`,
+        `/api/webAuthn/generate-authentication-options`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -69,7 +72,7 @@ const Login: React.FC = () => {
       const credential = await startAuthentication({ optionsJSON: options });
 
       const verificationResponse = await fetch(
-        `${apiHost}webAuthn/verify-authentication`,
+        `/api/webAuthn/verify-authentication`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -86,8 +89,8 @@ const Login: React.FC = () => {
 
       if (verificationResult.message === "Success") {
         if (verificationResult.token) {
-          await validateToken();
-          router.replace("/");
+          if (onSuccess) onSuccess();
+          router.replace(redirectPath);
           return;
         }
         router.replace("/mfaLogin");
@@ -103,7 +106,7 @@ const Login: React.FC = () => {
     setFormErrors("");
 
     try {
-      const response = await fetch(`${apiHost}auth/login`, {
+      const response = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ identifier, passkeyAvailable }),
@@ -128,7 +131,7 @@ const Login: React.FC = () => {
     setFormErrors("");
 
     try {
-      const response = await fetch(`${apiHost}registration/register`, {
+      const response = await fetch(`/api/registration/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, phone }),

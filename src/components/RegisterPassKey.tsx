@@ -1,19 +1,17 @@
+"use client";
+
 import {
   type RegistrationResponseJSON,
   startRegistration,
   WebAuthnError,
 } from "@simplewebauthn/browser";
-import { useAuth } from "hooks/AuthProvider";
-import { useInternalAuth } from "context/InternalAuthContext";
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import styles from "../styles/registerPasskey.module.css";
 import { isPasskeySupported } from "../utils";
 
 const RegisterPasskey: React.FC = () => {
-  const { apiHost } = useAuth();
-  const { validateToken } = useInternalAuth();
   const router = useRouter();
   const [status, setStatus] = useState<
     "idle" | "success" | "error" | "loading"
@@ -26,7 +24,7 @@ const RegisterPasskey: React.FC = () => {
 
     try {
       const challengeRes = await fetch(
-        `${apiHost}webAuthn/generate-registration-options`,
+        `/api/webAuthn/generate-registration-options`,
         {
           method: "GET",
           headers: {
@@ -77,7 +75,7 @@ const RegisterPasskey: React.FC = () => {
   const verifyPassKey = async (attResp: RegistrationResponseJSON) => {
     try {
       const verificationResp = await fetch(
-        `${apiHost}webAuthn/verify-registration`,
+        `/api/webAuthn/verify-registration`,
         {
           method: "POST",
           headers: {
@@ -99,7 +97,7 @@ const RegisterPasskey: React.FC = () => {
       }
 
       if (verificationJSON?.verified) {
-        await validateToken();
+        setStatus("success");
       }
     } catch (error) {
       console.error(`An error occurred: ${error}`);

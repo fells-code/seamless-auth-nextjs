@@ -1,20 +1,18 @@
+"use client";
+
 import { startAuthentication } from "@simplewebauthn/browser";
 import { useRouter } from "next/navigation";
-import { useAuth } from "hooks/AuthProvider";
-import { useInternalAuth } from "context/InternalAuthContext";
 import React from "react";
 
 import styles from "../styles/passKeyLogin.module.css";
 
 const PassKeyLogin: React.FC = () => {
   const router = useRouter();
-  const { apiHost } = useAuth();
-  const { validateToken } = useInternalAuth();
 
   const handlePasskeyLogin = async () => {
     try {
       const response = await fetch(
-        `${apiHost}webAuthn/generate-authentication-options`,
+        `/api/webAuthn/generate-authentication-options`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -31,7 +29,7 @@ const PassKeyLogin: React.FC = () => {
       const credential = await startAuthentication({ optionsJSON: options });
 
       const verificationResponse = await fetch(
-        `${apiHost}webAuthn/verify-authentication`,
+        `/api/webAuthn/verify-authentication`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -48,7 +46,6 @@ const PassKeyLogin: React.FC = () => {
 
       if (verificationResult.message === "Success") {
         if (verificationResult.token) {
-          await validateToken();
           router.replace("/");
           return;
         }

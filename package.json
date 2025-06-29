@@ -7,20 +7,21 @@
     "url": "https://github.com/fells-code/seamless-auth-nextjs/issues"
   },
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "package.json",
     "README.md"
   ],
+    "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
   },
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fells-code/seamless-auth-nextjs.git"
@@ -29,7 +30,7 @@
   "author": "Brandon Corbett <brandon.corbett@fellscode.com>",
   "scripts": {
     "test": "jest",
-    "build": "rm -rf dist && tsc && rollup -c",
+    "build": "rm -rf dist && tsc",
     "prepare": "npm run build"
   },
   "peerDependencies": {
