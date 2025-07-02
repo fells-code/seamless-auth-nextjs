@@ -1,6 +1,6 @@
 {
   "name": "@seamless-auth/nextjs",
-  "version": "0.0.0",
+  "version": "0.0.1-beta.0",
   "description": "\"A drop in authentication solution for nextjs applications.",
   "homepage": "https://github.com/fells-code/seamless-auth-nextjs#readme",
   "bugs": {
@@ -8,11 +8,9 @@
   },
   "type": "module",
   "files": [
-    "dist",
-    "package.json",
-    "README.md"
+    "dist"
   ],
-    "main": "dist/index.js",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -21,7 +19,6 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fells-code/seamless-auth-nextjs.git"
