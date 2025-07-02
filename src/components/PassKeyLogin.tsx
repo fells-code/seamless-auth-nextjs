@@ -12,7 +12,7 @@ const PassKeyLogin: React.FC = () => {
   const handlePasskeyLogin = async () => {
     try {
       const response = await fetch(
-        `/api/webAuthn/generate-authentication-options`,
+        `/api/auth/webAuthn/generate-authentication-options`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -29,7 +29,7 @@ const PassKeyLogin: React.FC = () => {
       const credential = await startAuthentication({ optionsJSON: options });
 
       const verificationResponse = await fetch(
-        `/api/webAuthn/verify-authentication`,
+        `/api/auth/webAuthn/verify-authentication`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

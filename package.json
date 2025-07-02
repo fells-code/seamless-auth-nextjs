@@ -27,7 +27,7 @@
   "author": "Brandon Corbett <brandon.corbett@fellscode.com>",
   "scripts": {
     "test": "jest",
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc && rollup -c",
     "prepare": "npm run build"
   },
   "peerDependencies": {

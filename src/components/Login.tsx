@@ -55,7 +55,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = "/", onSuccess }) => {
   const handlePasskeyLogin = async () => {
     try {
       const response = await fetch(
-        `/api/webAuthn/generate-authentication-options`,
+        `/api/auth/webAuthn/generate-authentication-options`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -72,7 +72,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = "/", onSuccess }) => {
       const credential = await startAuthentication({ optionsJSON: options });
 
       const verificationResponse = await fetch(
-        `/api/webAuthn/verify-authentication`,
+        `/api/auth/webAuthn/verify-authentication`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -131,7 +131,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = "/", onSuccess }) => {
     setFormErrors("");
 
     try {
-      const response = await fetch(`/api/registration/register`, {
+      const response = await fetch(`/api/auth/registration/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, phone }),
